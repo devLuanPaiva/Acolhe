@@ -12,38 +12,72 @@ export class CaregiverProvider
     super(prisma);
   }
 
+  // Lista todos os cuidadores no banco de dados
   async listCaregiver(): Promise<ICaregiver[]> {
-    const caregivers = await this.prisma.caregiver.findMany();
+    const caregivers = await this.prisma.caregiver.findMany({
+      include: {
+        user: true, // Inclui os dados do usuário associados
+      },
+    });
     return caregivers as any;
   }
 
-  async addDiary(value: number, userId: number) {
-    const user = await this.prisma.user.findUnique({
-      where: { userId },
+  // Adiciona um valor diário para um cuidador específico
+  async addDiary(value: number, userId: number): Promise<void> {
+    // Verifica se o cuidador existe
+    const caregiver = await this.prisma.caregiver.findUnique({
+      where: { id: userId },
     });
-    await this.prisma.caregiver.create({
-      data: {
-        diaryValue: value,
-        id: user.id,
-      },
+
+    if (!caregiver) {
+      throw new Error('Caregiver not found');
+    }
+
+    // Atualiza o valor diário do cuidador
+    await this.prisma.caregiver.update({
+      where: { id: userId },
+      data: { dailyValue: value },
     });
   }
 
-  async getCaregiverByDiary(valueMin: number, valueMax: number) {
-    const caregiversList = await this.prisma.caregiver.findMany({
+  // Retorna cuidadores com valor diário dentro de um intervalo
+  async getCaregiverByDiary(
+    valueMin: number,
+    valueMax: number,
+  ): Promise<ICaregiver[]> {
+    const caregivers = await this.prisma.caregiver.findMany({
       where: {
         dailyValue: {
           gte: valueMin,
           lte: valueMax,
         },
       },
+      include: {
+        user: true, // Inclui os dados do usuário associados
+      },
     });
-    return caregiversList;
+    return caregivers as any;
   }
 
-  async evaluateCaregiver(value: string) {
-    await await this.prisma.caregiver.create({
-      data: value,
+  // Adiciona uma avaliação ao cuidador
+  async evaluateCaregiver(value: string, userId: number): Promise<void> {
+    // Verifica se o cuidador existe
+    const caregiver = await this.prisma.caregiver.findUnique({
+      where: { id: userId },
+    });
+
+    if (!caregiver) {
+      throw new Error('Caregiver not found');
+    }
+
+    // Adiciona a avaliação ao array de avaliações do cuidador
+    await this.prisma.caregiver.update({
+      where: { id: userId },
+      data: {
+        avaliations: {
+          push: value, // Adiciona ao array existente
+        },
+      },
     });
   }
 }

@@ -99,12 +99,21 @@ const CaregiversPage = () => {
     setFilteredCaregivers(filteredList);
   };
 
+  // Clear all filters
+  const clearFilters = () => {
+    setAge(undefined); // Reset age filter
+    setCity(""); // Reset city filter
+    setGender(""); // Reset gender filter
+    setFilteredCaregivers(caregivers); // Reset filtered list to original caregivers list
+  };
+
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-4xl font-bold mb-6">Cuidadores Disponíveis</h1>
 
       {/* Filters */}
       <div className="mb-6">
+        {/* Age Range Filter */}
         <div className="mb-4">
           <label htmlFor="minAge" className="block text-lg">
             Age Range
@@ -178,9 +187,17 @@ const CaregiversPage = () => {
         {/* Apply Filters Button */}
         <button
           onClick={handleFilterChange}
-          className="px-4 py-2 bg-blue-500 text-white rounded"
+          className="px-4 py-2 bg-blue-500 text-white rounded mr-4"
         >
           Apply Filters
+        </button>
+
+        {/* Clear Filters Button */}
+        <button
+          onClick={clearFilters}
+          className="px-4 py-2 bg-gray-500 text-white rounded"
+        >
+          Clear Filters
         </button>
       </div>
 

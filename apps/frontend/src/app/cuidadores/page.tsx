@@ -1,4 +1,4 @@
-import React from "react";
+import Link from "next/link";
 
 const caregivers = [
   {
@@ -6,21 +6,24 @@ const caregivers = [
     name: "Lucas Oliveira",
     description:
       "Especializado em reabilitação física para idosos após cirurgias ou lesões.",
-    image: "https://via.placeholder.com/150",
+    image:
+      "https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
   },
   {
     id: 2,
     name: "Beatriz Santos",
     description:
       "Cuidadora experiente em acompanhar pacientes com diabetes e hipertensão.",
-    image: "https://via.placeholder.com/150",
+    image:
+      "https://images.pexels.com/photos/8560209/pexels-photo-8560209.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
   },
   {
     id: 3,
     name: "Carlos Mendes",
     description:
       "Oferece suporte para idosos com deficiência visual ou auditiva.",
-    image: "https://via.placeholder.com/150",
+    image:
+      "https://images.pexels.com/photos/8942093/pexels-photo-8942093.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
   },
   {
     id: 4,
@@ -45,34 +48,29 @@ const caregivers = [
   },
 ];
 
-const CuidadoresPage = () => {
+export default function CaregiversPage() {
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-4xl font-bold text-center mb-6">Nossos Cuidadores</h1>
-      <p className="text-xl text-gray-600 text-center mb-10">
-        Encontre abaixo os melhores cuidadores disponíveis para atender você e
-        sua família.
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <h1 className="text-4xl font-bold mb-6">Cuidadores Disponíveis</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 object-center">
         {caregivers.map((caregiver) => (
-          <div
+          <Link
             key={caregiver.id}
-            className="bg-white shadow-md rounded-lg p-6 text-center"
+            href={`/cuidadores/${caregiver.id}`}
+            className="block bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
           >
             <img
               src={caregiver.image}
               alt={caregiver.name}
-              className="rounded-full w-32 h-32 mx-auto mb-4"
+              className="w-full h-52 object-cover object-center rounded-t-lg"
             />
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">
-              {caregiver.name}
-            </h2>
-            <p className="text-gray-600">{caregiver.description}</p>
-          </div>
+            <div className="p-4">
+              <h2 className="text-xl font-bold mb-2">{caregiver.name}</h2>
+              <p className="text-gray-600">{caregiver.description}</p>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
   );
-};
-
-export default CuidadoresPage;
+}

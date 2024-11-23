@@ -23,14 +23,14 @@ const CaregiverFilter: React.FC<CaregiverFilterProps> = ({
   };
 
   const handleAgeRangeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const newAgeRange = [...ageRange] as [number, number];
+    const newAgeRange = [...ageRange] as [number, number]; // Cast the array as a tuple
     if (event.target.name === "min") {
       newAgeRange[0] = parseInt(event.target.value);
     } else if (event.target.name === "max") {
       newAgeRange[1] = parseInt(event.target.value);
     }
 
-    setAgeRange(newAgeRange);
+    setAgeRange(newAgeRange); // Now it's treated as [number, number]
     onFilterChange({ gender, ageRange: newAgeRange, city });
   };
 

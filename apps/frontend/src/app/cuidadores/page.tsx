@@ -1,89 +1,192 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
-import CaregiverFilter from "@/components/CaregiverFilter";
 import { Caregiver } from "../types/caregiver";
 import { FilterOptions } from "../types/filters";
 
-const caregivers = [
+const caregivers: Caregiver[] = [
   {
     id: 1,
-    name: "Lucas Oliveira",
-    description:
-      "Especializado em reabilitação física para idosos após cirurgias ou lesões.",
-    image:
-      "https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    gender: "masculino",
-    age: "23",
+    name: "Maria Oliveira",
+    gender: "female",
+    age: 45,
+    city: "São Paulo",
+    description: "Experienced caregiver with a passion for elderly care.",
+    image: "https://via.placeholder.com/150?text=Maria+Oliveira",
   },
   {
     id: 2,
-    name: "Beatriz Santos",
+    name: "Carlos Souza",
+    gender: "male",
+    age: 38,
+    city: "Rio de Janeiro",
     description:
-      "Cuidadora experiente em acompanhar pacientes com diabetes e hipertensão.",
-    image:
-      "https://images.pexels.com/photos/8560209/pexels-photo-8560209.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    gender: "feminino",
-    age: "33",
+      "Certified caregiver, experienced in supporting people with dementia.",
+    image: "https://via.placeholder.com/150?text=Carlos+Souza",
   },
   {
     id: 3,
-    name: "Carlos Mendes",
-    description:
-      "Oferece suporte para idosos com deficiência visual ou auditiva.",
-    image:
-      "https://images.pexels.com/photos/8942093/pexels-photo-8942093.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    gender: "masculino",
-    age: "25",
+    name: "Fernanda Costa",
+    gender: "female",
+    age: 30,
+    city: "Minas Gerais",
+    description: "Kind and attentive caregiver for elderly individuals.",
+    image: "https://via.placeholder.com/150?text=Fernanda+Costa",
   },
   {
     id: 4,
-    name: "Fernanda Costa",
+    name: "João Pereira",
+    gender: "male",
+    age: 50,
+    city: "São Paulo",
     description:
-      "Especialista em proporcionar companhia e suporte emocional para idosos.",
-    image: "https://via.placeholder.com/150",
-    gender: "feminino",
-    age: "37",
+      "Caregiver specializing in elderly care and post-surgery recovery.",
+    image: "https://via.placeholder.com/150?text=João+Pereira",
   },
   {
     id: 5,
-    name: "Rafael Lima",
+    name: "Ana Ribeiro",
+    gender: "female",
+    age: 35,
+    city: "Rio de Janeiro",
     description:
-      "Experiência com cuidados paliativos e suporte emocional para famílias.",
-    image: "https://via.placeholder.com/150",
-    gender: "masculino",
-    age: "25",
+      "Bilingual caregiver offering support in Portuguese and English.",
+    image: "https://via.placeholder.com/150?text=Ana+Ribeiro",
   },
   {
     id: 6,
     name: "Clara Almeida",
-    description:
-      "Cuidadora bilíngue para famílias que necessitam de suporte em português e inglês.",
-    image: "https://via.placeholder.com/150",
-    gender: "feminino",
-    age: "28",
+    gender: "female",
+    age: 28,
+    city: "São Paulo",
+    description: "Compassionate caregiver with a focus on elderly well-being.",
+    image: "https://via.placeholder.com/150?text=Clara+Almeida",
   },
 ];
 
-const handleFilterChange = (filters: FilterOptions) => {
-  const { gender, ageRange, city } = filters;
+const CaregiversPage = () => {
+  const [filteredCaregivers, setFilteredCaregivers] =
+    useState<Caregiver[]>(caregivers);
+  const [age, setAge] = useState<[number, number] | undefined>(undefined); // Age as a tuple for min and max
+  const [city, setCity] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
 
-  const filteredList = caregivers.filter((caregiver: Caregiver) => {
-    const isGenderMatch = gender ? caregiver.genero === gender : true;
-    const isAgeMatch =
-      caregiver.idade >= ageRange[0] && caregiver.idade <= ageRange[1];
-    const isCityMatch = city ? caregiver.cidade === city : true;
+  const handleFilterChange = () => {
+    let filteredList = caregivers;
 
-    return isGenderMatch && isAgeMatch && isCityMatch;
-  });
+    // Age Filter
+    if (age) {
+      const [minAge, maxAge] = age; // Assuming `age` is an array with [minAge, maxAge]
+      filteredList = filteredList.filter(
+        (caregiver) => caregiver.age >= minAge && caregiver.age <= maxAge
+      );
+    }
 
-  setFilteredCaregivers(filteredList);
-};
+    // City Filter
+    if (city) {
+      filteredList = filteredList.filter((caregiver) =>
+        caregiver.city.toLowerCase().includes(city.toLowerCase())
+      );
+    }
 
-export default function CaregiversPage() {
+    // Gender Filter
+    if (gender) {
+      filteredList = filteredList.filter(
+        (caregiver) => caregiver.gender === gender
+      );
+    }
+
+    setFilteredCaregivers(filteredList);
+  };
+
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-4xl font-bold mb-6">Cuidadores Disponíveis</h1>
+
+      {/* Filters */}
+      <div className="mb-6">
+        <div className="mb-4">
+          <label htmlFor="minAge" className="block text-lg">
+            Age Range
+          </label>
+          <div className="flex gap-4 mt-2">
+            <input
+              id="minAge"
+              type="number"
+              placeholder="Min Age"
+              value={age?.[0] || ""}
+              onChange={(e) =>
+                setAge([Number(e.target.value), age ? age[1] : 100])
+              }
+              className="p-2 border rounded"
+            />
+            <input
+              id="maxAge"
+              type="number"
+              placeholder="Max Age"
+              value={age?.[1] || ""}
+              onChange={(e) =>
+                setAge([age ? age[0] : 0, Number(e.target.value)])
+              }
+              className="p-2 border rounded"
+            />
+          </div>
+        </div>
+
+        {/* City Filter */}
+        <div className="mb-4">
+          <label htmlFor="city" className="block text-lg">
+            City
+          </label>
+          <input
+            id="city"
+            type="text"
+            placeholder="Enter City"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            className="mt-2 p-2 border rounded"
+          />
+        </div>
+
+        {/* Gender Filter */}
+        <div className="mb-4">
+          <span className="text-lg">Gender</span>
+          <div className="mt-2 flex gap-4">
+            <label>
+              <input
+                type="checkbox"
+                value="female"
+                checked={gender === "female"}
+                onChange={() => setGender(gender === "female" ? "" : "female")}
+                className="mr-2"
+              />
+              Female
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value="male"
+                checked={gender === "male"}
+                onChange={() => setGender(gender === "male" ? "" : "male")}
+                className="mr-2"
+              />
+              Male
+            </label>
+          </div>
+        </div>
+
+        {/* Apply Filters Button */}
+        <button
+          onClick={handleFilterChange}
+          className="px-4 py-2 bg-blue-500 text-white rounded"
+        >
+          Apply Filters
+        </button>
+      </div>
+
+      {/* Caregivers List */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 object-center">
-        {caregivers.map((caregiver) => (
+        {filteredCaregivers.map((caregiver) => (
           <Link
             key={caregiver.id}
             href={`/cuidadores/${caregiver.id}`}
@@ -103,4 +206,6 @@ export default function CaregiversPage() {
       </div>
     </div>
   );
-}
+};
+
+export default CaregiversPage;

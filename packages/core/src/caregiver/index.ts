@@ -1,2 +1,5 @@
 import { ICaregiver } from "./model/ICaregiver.interface";
-export type { ICaregiver };
+import { ICaregiverRepository } from "./model/ICaregiverRepository.interface";
+import Caregiver from "./model/Caregiver.class";
+export type { ICaregiver, ICaregiverRepository };
+export { Caregiver };

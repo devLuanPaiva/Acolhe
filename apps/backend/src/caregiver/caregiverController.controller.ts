@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CaregiverProvider } from './caregiverProvider.provider';
 import { Caregiver, ICaregiver } from '@acolhe/core';
 
@@ -36,11 +36,14 @@ export class CaregiverController {
     }
   }
 
-  @Post('/evaluate')
-  async evaluateCaregiver(@Body() value: string) {
+  @Post('/evaluate:userId')
+  async evaluateCaregiver(
+    @Body() value: string,
+    @Param('userId') userId: number,
+  ) {
     const caregiver = new Caregiver(this.repo);
     try {
-      return await caregiver.evaluateCaregiver(value);
+      return await caregiver.evaluateCaregiver(value, userId);
     } catch (error) {
       throw new Error(error.message);
     }

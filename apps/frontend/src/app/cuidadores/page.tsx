@@ -11,7 +11,8 @@ const caregivers: Caregiver[] = [
     gender: "female",
     age: 45,
     city: "São Paulo",
-    description: "Experienced caregiver with a passion for elderly care.",
+    description:
+      "Cuidadora comprometida com o cuidado e conforto dos idosos, com ampla experiência.",
     image: "https://via.placeholder.com/150?text=Maria+Oliveira",
   },
   {
@@ -21,7 +22,7 @@ const caregivers: Caregiver[] = [
     age: 38,
     city: "Rio de Janeiro",
     description:
-      "Certified caregiver, experienced in supporting people with dementia.",
+      "Cuidador formado com grande experiência em pacientes com demência.",
     image: "https://via.placeholder.com/150?text=Carlos+Souza",
   },
   {
@@ -30,7 +31,8 @@ const caregivers: Caregiver[] = [
     gender: "female",
     age: 30,
     city: "Minas Gerais",
-    description: "Kind and attentive caregiver for elderly individuals.",
+    description:
+      "Cuidadora atenciosa e gentil para pacientes totalmente dependentes.",
     image: "https://via.placeholder.com/150?text=Fernanda+Costa",
   },
   {
@@ -39,8 +41,7 @@ const caregivers: Caregiver[] = [
     gender: "male",
     age: 50,
     city: "São Paulo",
-    description:
-      "Caregiver specializing in elderly care and post-surgery recovery.",
+    description: "Cuidador especializado em recuperação pós cirurgia",
     image: "https://via.placeholder.com/150?text=João+Pereira",
   },
   {
@@ -50,7 +51,7 @@ const caregivers: Caregiver[] = [
     age: 35,
     city: "Rio de Janeiro",
     description:
-      "Bilingual caregiver offering support in Portuguese and English.",
+      "Cuidadora bilíngue que oferece serviços em portugês e inglês.",
     image: "https://via.placeholder.com/150?text=Ana+Ribeiro",
   },
   {
@@ -59,7 +60,7 @@ const caregivers: Caregiver[] = [
     gender: "female",
     age: 28,
     city: "São Paulo",
-    description: "Compassionate caregiver with a focus on elderly well-being.",
+    description: "Cuidadora apaixonada com foco em pacientes com Alzheimer.",
     image: "https://via.placeholder.com/150?text=Clara+Almeida",
   },
 ];
@@ -116,13 +117,13 @@ const CaregiversPage = () => {
         {/* Age Range Filter */}
         <div className="mb-4">
           <label htmlFor="minAge" className="block text-lg">
-            Age Range
+            Idade
           </label>
           <div className="flex gap-4 mt-2">
             <input
               id="minAge"
               type="number"
-              placeholder="Min Age"
+              placeholder="Idade Mínima"
               value={age?.[0] || ""}
               onChange={(e) =>
                 setAge([Number(e.target.value), age ? age[1] : 100])
@@ -132,7 +133,7 @@ const CaregiversPage = () => {
             <input
               id="maxAge"
               type="number"
-              placeholder="Max Age"
+              placeholder="Idade Máxima"
               value={age?.[1] || ""}
               onChange={(e) =>
                 setAge([age ? age[0] : 0, Number(e.target.value)])
@@ -145,12 +146,12 @@ const CaregiversPage = () => {
         {/* City Filter */}
         <div className="mb-4">
           <label htmlFor="city" className="block text-lg">
-            City
+            Cidade
           </label>
           <input
             id="city"
             type="text"
-            placeholder="Enter City"
+            placeholder="Cidade"
             value={city}
             onChange={(e) => setCity(e.target.value)}
             className="mt-2 p-2 border rounded"
@@ -159,7 +160,7 @@ const CaregiversPage = () => {
 
         {/* Gender Filter */}
         <div className="mb-4">
-          <span className="text-lg">Gender</span>
+          <span className="text-lg">Gênero</span>
           <div className="mt-2 flex gap-4">
             <label>
               <input
@@ -169,7 +170,7 @@ const CaregiversPage = () => {
                 onChange={() => setGender(gender === "female" ? "" : "female")}
                 className="mr-2"
               />
-              Female
+              Feminino
             </label>
             <label>
               <input
@@ -179,7 +180,7 @@ const CaregiversPage = () => {
                 onChange={() => setGender(gender === "male" ? "" : "male")}
                 className="mr-2"
               />
-              Male
+              Masculino
             </label>
           </div>
         </div>
@@ -189,7 +190,7 @@ const CaregiversPage = () => {
           onClick={handleFilterChange}
           className="px-4 py-2 bg-blue-500 text-white rounded mr-4"
         >
-          Apply Filters
+          Aplicar Filtros
         </button>
 
         {/* Clear Filters Button */}
@@ -197,7 +198,7 @@ const CaregiversPage = () => {
           onClick={clearFilters}
           className="px-4 py-2 bg-gray-500 text-white rounded"
         >
-          Clear Filters
+          Limpar Filtros
         </button>
       </div>
 

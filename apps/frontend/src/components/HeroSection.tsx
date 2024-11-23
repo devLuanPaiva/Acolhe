@@ -4,9 +4,9 @@ import Image from 'next/image'
 
 export default function HeroSection() {
   return (
-    <section className="py-5 bg-gradient-to-r from-blue-50 to-green-50">
+    <section className="py-10">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-center">
-        <div className="md:w-1/2 mb-10 md:mb-0 text-center px-6">
+        <div className="md:w-1/2 mb-10 md:mb-0 text-center md:text-left     px-6">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
             Encontre o cuidador ideal para quem você ama
           </h1>

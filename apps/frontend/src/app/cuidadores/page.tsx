@@ -1,4 +1,7 @@
 import Link from "next/link";
+import CaregiverFilter from "@/components/CaregiverFilter";
+import { Caregiver } from "../types/caregiver";
+import { FilterOptions } from "../types/filters";
 
 const caregivers = [
   {
@@ -8,6 +11,8 @@ const caregivers = [
       "Especializado em reabilitação física para idosos após cirurgias ou lesões.",
     image:
       "https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    gender: "masculino",
+    age: "23",
   },
   {
     id: 2,
@@ -16,6 +21,8 @@ const caregivers = [
       "Cuidadora experiente em acompanhar pacientes com diabetes e hipertensão.",
     image:
       "https://images.pexels.com/photos/8560209/pexels-photo-8560209.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    gender: "feminino",
+    age: "33",
   },
   {
     id: 3,
@@ -24,6 +31,8 @@ const caregivers = [
       "Oferece suporte para idosos com deficiência visual ou auditiva.",
     image:
       "https://images.pexels.com/photos/8942093/pexels-photo-8942093.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    gender: "masculino",
+    age: "25",
   },
   {
     id: 4,
@@ -31,6 +40,8 @@ const caregivers = [
     description:
       "Especialista em proporcionar companhia e suporte emocional para idosos.",
     image: "https://via.placeholder.com/150",
+    gender: "feminino",
+    age: "37",
   },
   {
     id: 5,
@@ -38,6 +49,8 @@ const caregivers = [
     description:
       "Experiência com cuidados paliativos e suporte emocional para famílias.",
     image: "https://via.placeholder.com/150",
+    gender: "masculino",
+    age: "25",
   },
   {
     id: 6,
@@ -45,8 +58,25 @@ const caregivers = [
     description:
       "Cuidadora bilíngue para famílias que necessitam de suporte em português e inglês.",
     image: "https://via.placeholder.com/150",
+    gender: "feminino",
+    age: "28",
   },
 ];
+
+const handleFilterChange = (filters: FilterOptions) => {
+  const { gender, ageRange, city } = filters;
+
+  const filteredList = caregivers.filter((caregiver: Caregiver) => {
+    const isGenderMatch = gender ? caregiver.genero === gender : true;
+    const isAgeMatch =
+      caregiver.idade >= ageRange[0] && caregiver.idade <= ageRange[1];
+    const isCityMatch = city ? caregiver.cidade === city : true;
+
+    return isGenderMatch && isAgeMatch && isCityMatch;
+  });
+
+  setFilteredCaregivers(filteredList);
+};
 
 export default function CaregiversPage() {
   return (

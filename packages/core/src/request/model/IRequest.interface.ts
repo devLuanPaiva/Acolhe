@@ -5,6 +5,6 @@ import { ERequestStatus } from "./ERequestStatus.enum";
 export interface IRequest {
     value: number;
     patient: IPatient
-    carregiver: ICaregiver
+    caregiver: ICaregiver
     status: ERequestStatus;
 }

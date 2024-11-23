@@ -10,7 +10,7 @@ export default class Request {
   ) {}
 
   async createRequest(request: IRequest): Promise<void> {
-    if (!request || !request.patient.id || !request.carregiver.id) {
+    if ( !request.patient.id || !request.caregiver.id) {
       throw new Error(
         "Dados da solicitação inválidos. É necessário informar o usuário e o cuidador."
       );
@@ -24,7 +24,7 @@ export default class Request {
     await this.repo.create(newRequest);
 
     await this.caregiverService.notifyCaregiver(
-      `Uma nova solicitação foi criada para o cuidador ${request.carregiver.name}.`
+      `Uma nova solicitação foi criada para o cuidador ${request.caregiver.name}.`
     );
   }
 
@@ -49,7 +49,7 @@ export default class Request {
       throw new Error("ID da solicitação inválido.");
     }
 
-    if (!status || !status.status) {
+    if (!status.status) {
       throw new Error("Status da solicitação inválido.");
     }
 

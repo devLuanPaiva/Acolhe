@@ -3,6 +3,12 @@ import { useState } from "react";
 import Link from "next/link";
 import { Caregiver } from "../types/caregiver";
 import { FilterOptions } from "../types/filters";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const caregivers: Caregiver[] = [
   {
@@ -112,98 +118,105 @@ const CaregiversPage = () => {
     <div className="container mx-auto py-10">
       <h1 className="text-4xl font-bold mb-6">Cuidadores Disponíveis</h1>
 
-      <div className="filters bg-gray-50 rounded-lg p-6 shadow-md grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <div className="mb-6">
-          {/* Age Range Filter */}
-          <div className="mb-4">
-            <label htmlFor="minAge" className="block text-lg">
-              Idade
-            </label>
-            <div className="flex gap-4 mt-2">
-              <input
-                id="minAge"
-                type="number"
-                placeholder="Idade Mínima"
-                value={age?.[0] || ""}
-                onChange={(e) =>
-                  setAge([Number(e.target.value), age ? age[1] : 100])
-                }
-                className="p-2 border rounded"
-              />
-              <input
-                id="maxAge"
-                type="number"
-                placeholder="Idade Máxima"
-                value={age?.[1] || ""}
-                onChange={(e) =>
-                  setAge([age ? age[0] : 0, Number(e.target.value)])
-                }
-                className="p-2 border rounded"
-              />
-            </div>
-          </div>
+      <Accordion type="single" collapsible>
+        <AccordionItem value="item-1">
+          <AccordionTrigger className="text-xl">Filtros</AccordionTrigger>
+          <AccordionContent>
+            <div className="mb-6">
+              {/* Age Range Filter */}
+              <div className="mb-4">
+                <label htmlFor="minAge" className="block text-lg">
+                  Idade
+                </label>
+                <div className="flex gap-4 mt-2">
+                  <input
+                    id="minAge"
+                    type="number"
+                    placeholder="Idade Mínima"
+                    value={age?.[0] || ""}
+                    onChange={(e) =>
+                      setAge([Number(e.target.value), age ? age[1] : 100])
+                    }
+                    className="p-2 border rounded"
+                  />
+                  <input
+                    id="maxAge"
+                    type="number"
+                    placeholder="Idade Máxima"
+                    value={age?.[1] || ""}
+                    onChange={(e) =>
+                      setAge([age ? age[0] : 0, Number(e.target.value)])
+                    }
+                    className="p-2 border rounded"
+                  />
+                </div>
+              </div>
 
-          {/* City Filter */}
-          <div className="mb-4">
-            <label htmlFor="city" className="block text-lg">
-              Cidade
-            </label>
-            <input
-              id="city"
-              type="text"
-              placeholder="Cidade"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              className="mt-2 p-2 border rounded"
-            />
-          </div>
-
-          {/* Gender Filter */}
-          <div className="mb-4">
-            <span className="text-lg">Gênero</span>
-            <div className="mt-2 flex gap-4">
-              <label>
+              {/* City Filter */}
+              <div className="mb-4">
+                <label htmlFor="city" className="block text-lg">
+                  Cidade
+                </label>
                 <input
-                  type="checkbox"
-                  value="female"
-                  checked={gender === "female"}
-                  onChange={() =>
-                    setGender(gender === "female" ? "" : "female")
-                  }
-                  className="mr-2"
+                  id="city"
+                  type="text"
+                  placeholder="Cidade"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  className="mt-2 p-2 border rounded"
                 />
-                Feminino
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  value="male"
-                  checked={gender === "male"}
-                  onChange={() => setGender(gender === "male" ? "" : "male")}
-                  className="mr-2"
-                />
-                Masculino
-              </label>
+              </div>
+
+              {/* Gender Filter */}
+              <div className="mb-4">
+                <span className="text-lg">Gênero</span>
+                <div className="mt-2 flex gap-4">
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="female"
+                      checked={gender === "female"}
+                      onChange={() =>
+                        setGender(gender === "female" ? "" : "female")
+                      }
+                      className="mr-2"
+                    />
+                    Feminino
+                  </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="male"
+                      checked={gender === "male"}
+                      onChange={() =>
+                        setGender(gender === "male" ? "" : "male")
+                      }
+                      className="mr-2"
+                    />
+                    Masculino
+                  </label>
+                </div>
+              </div>
+
+              {/* Apply Filters Button */}
+              <button
+                onClick={handleFilterChange}
+                className="px-4 py-2 bg-blue-500 text-white rounded mr-4"
+              >
+                Aplicar Filtros
+              </button>
+
+              {/* Clear Filters Button */}
+              <button
+                onClick={clearFilters}
+                className="px-4 py-2 bg-gray-500 text-white rounded"
+              >
+                Limpar Filtros
+              </button>
             </div>
-          </div>
-
-          {/* Apply Filters Button */}
-          <button
-            onClick={handleFilterChange}
-            className="px-4 py-2 bg-blue-500 text-white rounded mr-4"
-          >
-            Aplicar Filtros
-          </button>
-
-          {/* Clear Filters Button */}
-          <button
-            onClick={clearFilters}
-            className="px-4 py-2 bg-gray-500 text-white rounded"
-          >
-            Limpar Filtros
-          </button>
-        </div>
-      </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
       {/* Caregivers List */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 object-center">

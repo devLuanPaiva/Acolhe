@@ -34,12 +34,14 @@ export default class User {
   }
 
   async createUser(user: IUser): Promise<void> {
+    console.log(user);
     if (!user.id || !user.name || !user.email) {
       throw new Error(
         "Dados do usuário inválidos. Nome e e-mail são obrigatórios."
       );
     }
     const existingUser = await this.repo.getUserByName(user.name);
+    console.log(existingUser);
     if (existingUser) {
       throw new Error(`Usuário já existe.`);
     }

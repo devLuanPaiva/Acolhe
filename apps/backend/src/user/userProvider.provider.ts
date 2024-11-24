@@ -12,10 +12,10 @@ export class UserProvider {
   }
 
   async getUserByName(name: string): Promise<IUser> {
-    const user = await this.prisma.user.findMany({
+    const users = await this.prisma.user.findMany({
       where: { name },
     });
-    return user as any;
+    return users[0] as any;
   }
 
   async getUserById(id: number): Promise<IUser | undefined> {

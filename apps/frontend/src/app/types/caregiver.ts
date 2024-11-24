@@ -1,7 +1,7 @@
 // Define the type for caregiver
 export interface Caregiver {
   id: number;
-  nome: string;
+  name: string;
   gender: string; // Male, Female, etc.
   age: number;
   city: string;

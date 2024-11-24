@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Image from 'next/image'
 import { Caregiver } from "../types/caregiver";
-import { FilterOptions } from "../types/filters";
 import {
   Accordion,
   AccordionContent,
@@ -226,9 +226,11 @@ const CaregiversPage = () => {
             href={`/cuidadores/${caregiver.id}`}
             className="block bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
           >
-            <img
+            <Image
               src={caregiver.image}
               alt={caregiver.name}
+              width={500}
+              height={300}
               className="w-full h-52 object-cover object-center rounded-t-lg"
             />
             <div className="p-4">

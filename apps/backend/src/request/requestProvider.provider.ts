@@ -36,7 +36,7 @@ export class RequestProvider {
           connect: { id: request.patient?.id }, // Conectar ao paciente pelo ID
         },
         caregiver: {
-          connect: { id: request.carregiver?.id }, // Conectar ao cuidador pelo ID
+          connect: { id: request.caregiver?.id }, // Conectar ao cuidador pelo ID
         },
       },
     });

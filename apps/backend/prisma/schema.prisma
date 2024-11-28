@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  name      String
+  image     String
+  years     Int
+  type      String
+  email     String     @unique
+  password  String
+  phone     String
+  gender    String
+  address   String
+  Patient   Patient?
+  Caregiver Caregiver?
+
+  @@map("user")
+}
+
+model Patient {
+  id               Int       @id
+  medicalCondition String
+  user             User      @relation(fields: [id], references: [id])
+  requests         Request[] @relation("PatientRequests")
+
+  @@map("patient")
+}
+
+model Caregiver {
+  id          Int       @id
+  dailyValue  Float
+  avaliations String[]
+  user        User      @relation(fields: [id], references: [id])
+  requests    Request[] @relation("CaregiverRequests")
+
+  @@map("caregiver")
+}
+
+model Request {
+  id          Int       @id @default(autoincrement())
+  value       Float
+  patientId   Int
+  caregiverId Int
+  status      String
+  patient     Patient   @relation("PatientRequests", fields: [patientId], references: [id])
+  caregiver   Caregiver @relation("CaregiverRequests", fields: [caregiverId], references: [id])
+
+  @@map("request")
+}
